@@ -1,4 +1,4 @@
-var express = require('express');
+import express from 'express';
 var router = express.Router();
 
 /* GET home page. */
@@ -33,4 +33,4 @@ router.post('/create_process', async(req,res) => {
 });
 
 
-module.exports = router;
+export default router;

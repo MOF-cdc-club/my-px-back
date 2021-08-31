@@ -223,6 +223,69 @@ sequlize의 config 설정도 변경
 https://www.python2.net/questions-1155744.htm 참고
 
 
+2021-08-29
+동적으로 require하는 것은 지양
+eslint가 추적하여 포멧팅, 인텔리 센스를 지원못하는 부분과, 작성한 코드에 대한 정확한 이해에 방해가 되기에. 지양하는것을 제안
 
+conventional Commit 에 신경 쓸 것.
+자신이 작성한 코드의 변경 사항이 어떤 것 인지, 다른 사람들도 알기위한 커밋양식입니다. 이를 지키는 것을 권장.
+
+공부한 내용을 md 양식에 맞춰 작성할 것
+무엇을 공부했는 지에 대한 자료 정리도 개인 활동의 핵심 내용
+
+
+
+2021-08-29
+1. model의 index.js 파일 중 db 객체에 테이블 추가하는 과정을 직관적이게 수정
+/bin/www파일을 없애고 app.js에서 listen을 통해 연결, app.js 명을 server.js로 수정
+
+2. routing 부분을 모듈화 시킴, server.js에서 라우팅 부분은 routes파일에 controller.js 파일을 통해 처리, 해당 url이 어느 라우터파일을 통해 처리되는지 controller.js에서 결정되며 각각의 라우팅 파일들에서 그 이후 처리를 담당함
+
+3. models(table)들의 이름들이 router파일들과 헷갈리기에 table명의 앞글자는 대문자, 나머지는 소문자로 통일함
+
+4. url방식은 querystring 방식을 사용, req.query를 통해 요청되는 내용들을 처리
+	product/category?kinds=liquor -> product 중 카테고리가 '술'인 항목들을 모아 보내줌
+
+5. 모든 파일의 모듈 방식은 require가 아닌 import 방식을 사용, es6 문법으로 babel-node를 통해 실행
+	models 폴더에서 각각의 테이블들을 export 한뒤 Index.js의 db에 담아 둠
+
+2021-08-30
+1. Request 객체는 API를 컨트롤하기 위한 메소드를 셋 담고 있다. 그것이 각각 param, query,body이다.
+
+-req.param
+	주소에 포함된 변수를 담는다. 예를 들어 https://okky.com/post/12345 라는 주소가 있다면 12345를 담는다
+
+-req.query
+	주소 바깥, ? 이후의 변수를 담는다. 예를 들어 https://okky.com/post?q=Node.js 일 경우 Node.js를 담는다
+
+-req.body
+	XML, JSON, Multi Form 등의 데이터를 담는다. 당연히 주소에선 확인할 수 없다.
+
+	var bodyParser = require('body-parser');	// 모듈 import. Express v4.16.0이상은 생략 가능
+	ex)
+	app.use(bodyParser.json());	// json 등록	
+	app.use(bodyParser.urlencoded({ extended : false }));	// URL-encoded 등록
+ URL-encoded는 주소 형식으로 데이터를 보내는 방식이다. 'extended' 옵션이 false면 쿼리스트링을 해석함에 있어서 querystring 모듈을 사용해야하고 true면 qs 모듈을 사용해야 한다. 모든게 완료되면 'req.body'를 이용하여  파라미터를 받을 수 있게 된다. 
+
+
+you can’t use require and import at the same time in your node program and it is more preferred to use require instead of import as you are required to use the experimental module flag feature to run import program. -> import로 통일
+
+export 지시자를 변수나 함수 앞에 붙이면 외부 모듈에서 이용가능
+
+import 구문
+
+import defaultExport from "module-name"; 
+import * as name from "module-name";
+import { export1 } from "module-name";
+import { export1 as alias1 } from "module-name";
+import { export1 , export2 } from "module-name";
+import { foo , bar } from "module-name/path/to/specific/un-exported/file";
+import { export1 , export2 as alias2 , [...] } from "module-name";
+import defaultExport, { export1 [ , [...] ] } from "module-name";
+import defaultExport, * as name from "module-name";
+import "module-name";
+var promise = import("module-name");
+
+기본값으로 바로 가져오는 가장 간단한 버전: import myModule from "my-module.js";
 
 
