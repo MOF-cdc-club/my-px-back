@@ -1,12 +1,11 @@
 {
   "name": "back-end-server",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "nodemon --experimental-json-modules --exec babel-node server.js"
   },
   "dependencies": {
-    "@babel/core": "^7.15.0",
     "@babel/node": "^7.14.9",
     "cookie-parser": "~1.4.4",
     "core-js": "^3.16.4",
@@ -20,8 +19,14 @@
   },
   "type": "module",
   "devDependencies": {
-    "@babel/cli": "^7.14.8",
-    "@babel/preset-env": "^7.15.0",
+    "@babel/core": "^7.15.5",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.15.4",
+    "@babel/register": "^7.15.3",
+    "babel-loader": "^8.2.2",
     "nodemon": "^2.0.12"
+  },
+  "resolutions": {
+    "babel-core": "7.0.0-bridge.0"
   }
 }

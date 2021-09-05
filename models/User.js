@@ -8,9 +8,13 @@ const userData = (sequelize, DataTypes) => {
 			primaryKey: true,
 		},
 		password: {
-			type: DataTypes.STRING(100),
+			type: DataTypes.STRING(500),
 			allowNull: false
 		},
+		salt: {
+			type: DataTypes.STRING(500),
+			allowNull: true
+		},	
 		name: {
 			type: DataTypes.STRING(10),
 			allowNull: false
@@ -40,9 +44,10 @@ const userData = (sequelize, DataTypes) => {
 			type: DataTypes.INTEGER,
 			defaultValue: 0,
 		},
+		//관리자 권한이면 authority가 1, 단순 사용자는 0
 		authority: {
 			type: DataTypes.BOOLEAN,
-			defaultValue: 1,
+			defaultValue: 0,
 		},
 	});
 }

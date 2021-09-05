@@ -19,6 +19,9 @@ npm install -g @vue/cli, vue create vue-3-and-typescript 을 통해 typescript �
 
 babel 선택,
 	최신 버전의 자바스크립트 코드를(ECMA 2015+/ES6 코드를) ES5 환경에서 동작하도록 컴파일하는 자바스크립트 컴파일러이다. (트랜스파일러라고 칭하기도 함.) 여기서 말하는 ES5 환경이란 즉 현재나 이전 브라우저 환경을 의미한다.
+	@babel/core 는 어떤 방식으로 babel을 사용하든 항상 필요한 패키지, @babel/cli는 터미널에서 커맨드를 입력해서 babel을 사용할 때 필요한 패키지
+	plugin/preset 플러그인이나 프리셋은 babel에게 문법 변환 규칙을 알려줄 수 있음
+	
 
 ESLint 선택
 	ESLint는 JavaScript, JSX의 정적 분석 도구로 오픈 소스 프로젝트입니다. 코드를 분석해 문법적인 오류나 안티 패턴을 찾아주고 일관된 코드 스타일로 작성하도록 도와줍니다.
@@ -287,5 +290,44 @@ import "module-name";
 var promise = import("module-name");
 
 기본값으로 바로 가져오는 가장 간단한 버전: import myModule from "my-module.js";
+
+
+2021-09-02
+로그인 회원가입 기능 구현
+https://it-learning.tistory.com/227
+
+
+ GET 방식으로 요청할 때는 주소 문자열에 요청 파라미터가 들어가지만 POST 방식으로 요청할 때는 본문 영역(body 영역)에 요청 파라미터가 들어 있게 되므로 요청 파라미터를 파싱하는 방법이 GET 방식과 다르다.
+ 
+ body-parser 모듈을 사용하기 위한 설정은 두 줄이다. app 객체의 use() 메소드를 사용해 미들웨어를 설정하는데 bodyParser.urlencoded() 메소드를 호출하여 미들웨어를 설정하면 application/x-www-form-urlencoded 형식으로 전달된 요청 파라미터를 파싱할 수 있다.
+ 
+ 
+ 
+ 담에 할 일
+ https://resttesttest.com/ 사이트 이용해서 post 가 잘 되는지 확인할것, (회원가입 기능)
+
+
+2021-09-03
+1. 테이블에 로우를 추가할 때 Data too long for column 에러 -> 
+	sql_mode 값이 STRICT_TRANS_TABLES 일 경우 필드에 선언된 대로의 값이 주어지지 않으면 에러를 발생시키는 엄격한 모드로, 데이터 입력을 까다롭게 받아 무결성 유지에는 좋으나 번거롭기도 하기 때문에 my.cnf의 설정을 변경해주자. 우선, my.cnf의 sql_mode 값이 어떤 상태인지 확인하려면 mysql에 접속해야 한다.
+select @@global.sql_mode; 위와 같은 명령어를 입력하면 현재 sql_mode 값을 확인할 수 있다.
+sql_mode의 strict를 해제하려면 아래 명령어를 입력하자.
+SET @@global.sql_mode= 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'; 
+user 생성에서 post 잘 되는 것을 확인함!
+(id:abc, password:abc, name:abb, email:sdf@naver.com)
+
+2. 라우터부분을 기능에 따라 폴더별로 나누어 구현
+
+
+
+다음에 할것: 개발도중 컬럼이나 테이블 추가해야 할 때 백업을 위해 db 마이그레이션을 이용함, db마이그레이션이 무엇인지 찾아보고, 컬럼 추가시 어떻게 해야 하는지 알아볼것
+https://devonaws.com/back-end/node-js/node-js-orm-sequelize-add-column/
+
+
+
+
+
+
+
 
 
